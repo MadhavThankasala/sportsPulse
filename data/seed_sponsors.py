@@ -109,6 +109,92 @@ sponsors_data = [
             {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
         ]
     },
+
+    {
+        "team": "Morocco",
+        "confederation": "CAF",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Adidas", "ticker": "ADS.DE", "type": "kit"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "Japan",
+        "confederation": "AFC",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Adidas", "ticker": "ADS.DE", "type": "kit"},
+            {"company": "Toyota", "ticker": "TM", "type": "regional_sponsor"},
+            {"company": "Sony", "ticker": "SONY", "type": "regional_sponsor"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "Canada",
+        "confederation": "CONCACAF",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Nike", "ticker": "NKE", "type": "kit"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "Australia",
+        "confederation": "AFC",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Nike", "ticker": "NKE", "type": "kit"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "South Korea",
+        "confederation": "AFC",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Nike", "ticker": "NKE", "type": "kit"},
+            {"company": "Samsung", "ticker": "SSNLF", "type": "regional_sponsor"},
+            {"company": "Hyundai", "ticker": "HYMTF", "type": "regional_sponsor"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "Senegal",
+        "confederation": "CAF",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Puma", "ticker": "PUM.DE", "type": "kit"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "Colombia",
+        "confederation": "CONMEBOL",
+        "world_cup_wins": 0,
+        "sponsors": [
+            {"company": "Adidas", "ticker": "ADS.DE", "type": "kit"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
+    {
+        "team": "Italy",
+        "confederation": "UEFA",
+        "world_cup_wins": 4,
+        "sponsors": [
+            {"company": "Adidas", "ticker": "ADS.DE", "type": "kit"},
+            {"company": "Puma", "ticker": "PUM.DE", "type": "kit"},
+            {"company": "Budweiser", "ticker": "BUD", "type": "official_wc_sponsor"},
+            {"company": "Visa", "ticker": "V", "type": "official_wc_sponsor"},
+        ]
+    },
 ]
 
 # Official World Cup sponsors (apply to all teams)
