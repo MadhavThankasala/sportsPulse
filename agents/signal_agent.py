@@ -65,10 +65,19 @@ def get_current_stock_price(ticker: str) -> dict:
 
 def save_signal_report(report: dict) -> dict:
     """Save a generated signal report to MongoDB"""
-    db = get_db()
+    from utils.vector_search import embed_text
     import copy
+    db = get_db()
     report_to_save = copy.deepcopy(report)
     report_to_save["created_at"] = datetime.utcnow().isoformat()
+    
+    # Create text summary for embedding
+    summary = f"{report_to_save.get('match_result', '')} {report_to_save.get('title', '')}"
+    if report_to_save.get('signals'):
+        for s in report_to_save['signals']:
+            summary += f" {s.get('company', '')} {s.get('signal', '')} {s.get('rationale', '')}"
+    
+    report_to_save["embedding"] = embed_text(summary)
     result = db.signal_reports.insert_one(report_to_save)
     return {"saved": True, "id": str(result.inserted_id)}
 
@@ -165,10 +174,10 @@ def run_signal_agent(match_result: str):
 
     messages = [types.Content(role="user", parts=[types.Part(text=match_result)])]
     
-    # Agentic loop
+    
     while True:
         response = client.models.generate_content(
-            model="gemini-2.0-flash-001",
+            model="gemini-2.5-flash",
             contents=messages,
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
@@ -180,11 +189,11 @@ def run_signal_agent(match_result: str):
         candidate = response.candidates[0]
         messages.append(types.Content(role="model", parts=candidate.content.parts))
 
-        # Check for tool calls
+        
         tool_calls = [p for p in candidate.content.parts if p.function_call is not None]
 
         if not tool_calls:
-            # Agent is done
+            
             final_text = "".join(p.text for p in candidate.content.parts if hasattr(p, 'text') and p.text)
             if not final_text:
                 final_text = "Signal report generated and saved to database successfully."
