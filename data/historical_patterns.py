@@ -3,10 +3,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 from utils.db import get_db
 
-# Past World Cup key match dates and outcomes
-# Format: (date, team_won, team_lost, stage)
+
 historical_matches = [
-    # 2022 World Cup notable matches
+    
     ("2022-12-18", "Argentina", "France", "Final"),
     ("2022-12-14", "Argentina", "Croatia", "Semifinal"),
     ("2022-12-13", "France", "Morocco", "Semifinal"),
@@ -15,19 +14,19 @@ historical_matches = [
     ("2022-12-06", "Argentina", "Australia", "Round of 16"),
     ("2022-12-04", "France", "Poland", "Round of 16"),
 
-    # 2018 World Cup notable matches
+    
     ("2018-07-15", "France", "Croatia", "Final"),
     ("2018-07-10", "France", "Belgium", "Semifinal"),
     ("2018-07-11", "Croatia", "England", "Semifinal"),
     ("2018-07-06", "France", "Uruguay", "Quarterfinal"),
 
-    # 2014 World Cup notable matches
+    
     ("2014-07-13", "Germany", "Argentina", "Final"),
     ("2014-07-08", "Germany", "Brazil", "Semifinal"),
     ("2014-07-09", "Argentina", "Netherlands", "Semifinal"),
 ]
 
-# Tickers to track
+
 tickers = {
     "ADS.DE": "Adidas",
     "NKE": "Nike",
@@ -44,7 +43,7 @@ def get_price_change(ticker, match_date, days_after=3):
     try:
         match_dt = datetime.strptime(match_date, "%Y-%m-%d")
         
-        # Get price window: 1 day before to days_after after match
+        
         start = match_dt - timedelta(days=2)
         end = match_dt + timedelta(days=days_after + 2)
         
@@ -55,7 +54,7 @@ def get_price_change(ticker, match_date, days_after=3):
         if hist.empty or len(hist) < 2:
             return None
             
-        # Get closing price on/just after match day
+        
         hist.index = hist.index.tz_localize(None)
         after_match = hist[hist.index >= match_dt]
         before_match = hist[hist.index < match_dt]
@@ -92,7 +91,7 @@ def build_historical_patterns():
     for match_date, winner, loser, stage in historical_matches:
         print(f"Processing {winner} vs {loser} ({stage}, {match_date})")
         
-        # Get sponsors for winner and loser from MongoDB
+        
         winner_doc = db.teams.find_one({"team": winner})
         loser_doc = db.teams.find_one({"team": loser})
         
@@ -124,16 +123,16 @@ def build_historical_patterns():
                     **price_data
                 }
                 patterns.append(pattern)
-                print(f"  ✅ {company_name}: 1d={price_data['change_1d_pct']}%, 3d={price_data['change_3d_pct']}%")
+                print(f"  {company_name}: 1d={price_data['change_1d_pct']}%, 3d={price_data['change_3d_pct']}%")
             else:
-                print(f"  ❌ No data for {ticker}")
+                print(f"  No data for {ticker}")
     
     if patterns:
         db.historical_patterns.insert_many(patterns)
         db.historical_patterns.create_index("ticker")
         db.historical_patterns.create_index("winner")
         db.historical_patterns.create_index([("ticker", 1), ("winner", 1)])
-        print(f"\n✅ Stored {len(patterns)} historical patterns in MongoDB")
+        print(f"\nStored {len(patterns)} historical patterns in MongoDB")
     
     return patterns
 
@@ -167,7 +166,7 @@ def get_avg_pattern(ticker, team, role="winner"):
 if __name__ == "__main__":
     build_historical_patterns()
     
-    # Test average pattern lookup
+    
     print("\n--- Test: Adidas after Argentina wins ---")
     result = get_avg_pattern("ADS.DE", "Argentina", "winner")
     print(result)

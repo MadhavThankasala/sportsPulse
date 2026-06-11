@@ -211,21 +211,21 @@ wc_sponsors = [
 def seed_database():
     db = get_db()
     
-    # Clear existing data
+    
     db.teams.drop()
     db.wc_sponsors.drop()
     
-    # Insert teams and sponsors
+    
     db.teams.insert_many(sponsors_data)
     db.wc_sponsors.insert_many(wc_sponsors)
     
-    print(f"✅ Seeded {len(sponsors_data)} teams")
-    print(f"✅ Seeded {len(wc_sponsors)} World Cup sponsors")
+    print(f"Seeded {len(sponsors_data)} teams")
+    print(f"Seeded {len(wc_sponsors)} World Cup sponsors")
     
-    # Create indexes for fast lookup
+    
     db.teams.create_index("team")
     db.teams.create_index("sponsors.ticker")
-    print("✅ Indexes created")
+    print("Indexes created")
 
 def get_sponsors_for_team(team_name):
     db = get_db()
@@ -237,7 +237,7 @@ def get_sponsors_for_team(team_name):
 if __name__ == "__main__":
     seed_database()
     
-    # Test it
+    
     print("\n--- Test Query ---")
     sponsors = get_sponsors_for_team("Argentina")
     print(f"Argentina sponsors: {sponsors}")

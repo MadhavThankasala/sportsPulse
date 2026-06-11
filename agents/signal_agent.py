@@ -10,7 +10,7 @@ import json
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# ── Tool functions the agent can call ──────────────────────────────────────
+
 
 def get_team_sponsors(team_name: str) -> dict:
     """Get sponsors and stock tickers for a World Cup team"""
@@ -71,7 +71,7 @@ def save_signal_report(report: dict) -> dict:
     report_to_save = copy.deepcopy(report)
     report_to_save["created_at"] = datetime.utcnow().isoformat()
     
-    # Create text summary for embedding
+    
     summary = f"{report_to_save.get('match_result', '')} {report_to_save.get('title', '')}"
     if report_to_save.get('signals'):
         for s in report_to_save['signals']:
@@ -81,7 +81,7 @@ def save_signal_report(report: dict) -> dict:
     result = db.signal_reports.insert_one(report_to_save)
     return {"saved": True, "id": str(result.inserted_id)}
 
-# ── Tool dispatcher ─────────────────────────────────────────────────────────
+
 
 def dispatch_tool(tool_name: str, tool_args: dict):
     if tool_name == "get_team_sponsors":
@@ -155,7 +155,7 @@ gemini_tools = [types.Tool(function_declarations=tool_schemas)]
 
 def run_signal_agent(match_result: str):
     print(f"\n🏆 SportsPulse Signal Agent")
-    print(f"⚽ Match: {match_result}")
+    print(f"Match: {match_result}")
     print("=" * 60)
 
     system_instruction = """You are SportsPulse, an AI investment signal agent.
@@ -197,13 +197,13 @@ def run_signal_agent(match_result: str):
             final_text = "".join(p.text for p in candidate.content.parts if hasattr(p, 'text') and p.text)
             if not final_text:
                 final_text = "Signal report generated and saved to database successfully."
-            print("\n📊 SIGNAL REPORT:")
+            print("\nSIGNAL REPORT:")
             print("=" * 60)
             print(final_text)
             return final_text
        
 
-        # Execute tools and feed results back
+        
         tool_results = []
         for part in tool_calls:
             fc = part.function_call
